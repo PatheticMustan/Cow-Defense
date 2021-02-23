@@ -15,6 +15,7 @@ public class Character {
         this.nameColor = nameColor;
         this.assets = assets;
         this.vnt = GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<VNText>();
+        this.instance = 
     }
 
     // display text (text, speed)
