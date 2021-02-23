@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Character {
+public class Character : MonoBehaviour {
     public string name;
     public Color nameColor;
     public Sprite[] assets;
@@ -15,7 +15,7 @@ public class Character {
         this.nameColor = nameColor;
         this.assets = assets;
         this.vnt = GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<VNText>();
-        this.instance = 
+        this.instance = Instantiate(GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<GameManagerScript>().characterPrefab);
     }
 
     // display text (text, speed)
