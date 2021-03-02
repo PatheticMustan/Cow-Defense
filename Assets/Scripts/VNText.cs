@@ -9,13 +9,12 @@ public class VNText : MonoBehaviour {
     public bool messageWriteDone;
 
     private void Start() {
-        DisplayMessage("the quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhhthe quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhhthe quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhh");
-
-        messageWriteDone = true;
+        // DisplayMessage("the quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhhthe quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhhthe quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhh");
     }
 
     public void DisplayMessage(string message) {
         StartCoroutine("WriteMessage", message);
+        messageWriteDone = true;
     }
 
     IEnumerator WriteMessage(string message) {
