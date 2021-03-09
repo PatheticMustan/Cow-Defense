@@ -916,9 +916,9 @@ MonoBehaviour:
   - {fileID: 1248428216}
   - {fileID: 0}
   - {fileID: 0}
-  characterPrefab: {fileID: 7445728672947488842, guid: 685026a07bbd95f4fbaa093233fad5bb,
-    type: 3}
   characterContainer: {fileID: 1683497782}
+  Barry: {fileID: 38171948}
+  Buzz: {fileID: 1248428216}
 --- !u!1 &1683497782
 GameObject:
   m_ObjectHideFlags: 0

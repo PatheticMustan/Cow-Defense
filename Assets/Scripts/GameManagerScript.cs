@@ -4,31 +4,47 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-    // castList should be populated in the Inspector
-    public Character[] castList;
-    public GameObject characterContainer;
+    // not sure what we'll use this for
+    // public GameObject characterContainer;
 
-    // character shortcuts
+    // character shortcuts, assigned in inspector
     public Character Barry, Buzz;
 
     // there will be no saving, 
     private VNA[] vn;
-    private int currentAction;
+    private int actionIndex;
+
+    private 
 
     void Start() {
-        Barry = castList[0];
-        Buzz = castList[1];
-
         vn = new VNA[] {
             text(Barry, "hello"),
             asset(Barry, 1),
             choice(Buzz, "what color hair do I want", new string[] { "yellow", "black" })
         };
 
-        currentAction = 0;
+        actionIndex = 0;
     }
 
-    void Update() {}
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            // parse action
+            VNA currentAction = vn[actionIndex];
+            switch (currentAction.type) {
+                case "text":
+                    break;
+                case "choice":
+                    break;
+                case "asset":
+                    break;
+                default:
+                    break;
+            }
+
+            // increment current action
+            actionIndex++;
+        }
+    }
 
 
     // I am a bad person
