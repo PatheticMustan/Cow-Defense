@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -41,15 +42,28 @@ public class GameManagerScript : MonoBehaviour
                 case "choice":
                     break;
                 case "asset":
+                    Character ch = currentAction.character.GetComponent<Character>();
+                    if (ch.assets.Length - 1 < currentAction.assetIndex) {
+                        Debug.LogError("Missing asset, " + currentAction.name + " is missing asset #" + currentAction.assetIndex);
+                        break;
+                    }
+
+                    currentAction.character.GetComponent<Image>().sprite = ch.assets[currentAction.assetIndex];
                     break;
                 default:
+
                     break;
             }
 
             // increment current action
             // if 1 vn, actionIndex will equal 0, 
             // edgecase for 0 vn but lmao I don't care, not gonna fix it
-            if (actionIndex != vn.Length - 1) actionIndex++;
+            if (actionIndex != vn.Length - 1) {
+                actionIndex++;
+            } else {
+                Debug.Log("end!");
+                Debug.Log("There's an interesting band called 'Death Grips', their music is weird, like a mix of random words screamed, and percussion. Check them out!");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.A)) {
@@ -83,6 +97,8 @@ public class GameManagerScript : MonoBehaviour
 
         public int assetIndex;
 
+        public Character character;
+
         // choice
         public VNA(Character character, string text, string[] choices) {
             this.type = "choice";
@@ -92,6 +108,7 @@ public class GameManagerScript : MonoBehaviour
             this.text = text;
             this.choices = choices;
             this.assetIndex = -1;
+            this.character = character;
         }
 
         // text
@@ -103,6 +120,7 @@ public class GameManagerScript : MonoBehaviour
             this.text = text;
             this.choices = null;
             this.assetIndex = -1;
+            this.character = character;
         }
 
         // asset
@@ -114,6 +132,7 @@ public class GameManagerScript : MonoBehaviour
             this.text = null;
             this.choices = null;
             this.assetIndex = index;
+            this.character = character;
         }
     }
 }
