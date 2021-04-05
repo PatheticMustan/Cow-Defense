@@ -12,7 +12,7 @@ public class GameManagerScript : MonoBehaviour
 
     // there will be no saving, 
     private VNA[] vn;
-    private int actionIndex;
+    public int actionIndex;
 
     
 
@@ -47,7 +47,9 @@ public class GameManagerScript : MonoBehaviour
             }
 
             // increment current action
-            actionIndex++;
+            // if 1 vn, actionIndex will equal 0, 
+            // edgecase for 0 vn but lmao I don't care, not gonna fix it
+            if (actionIndex != vn.Length - 1) actionIndex++;
         }
 
         if (Input.GetKeyDown(KeyCode.A)) {
