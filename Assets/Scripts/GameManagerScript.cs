@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class GameManagerScript : MonoBehaviour
     // there will be no saving, 
     private VNA[] vn;
     public int actionIndex;
+
+    // sorry for not putting this in VNText
+    // love, Kevin ;))
+    public TextMeshProUGUI nameText;
 
     
 
@@ -45,6 +50,9 @@ public class GameManagerScript : MonoBehaviour
                     VNA currentAction = vn[actionIndex];
                     switch (currentAction.type) {
                         case "text":
+                            Debug.Log(currentAction.color);
+                            nameText.text = currentAction.name;
+                            nameText.GetComponent<TextMeshProUGUI>().color = currentAction.color;
                             GetComponent<VNText>().DisplayMessage(currentAction.text);
                             break;
                         case "choice":
