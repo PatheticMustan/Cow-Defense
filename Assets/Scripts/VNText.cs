@@ -6,32 +6,42 @@ using TMPro;
 public class VNText : MonoBehaviour {
     public TextMeshProUGUI textDisplay;
     public AudioSource charSound;
-    public bool messageWriteDone;
 
-    private void Start() {
+    public float characterInterval;
+    public float timer;
+    public string currentMessage;
+    public bool isCompleted;
+    public int characterIndex;
+
+    void Start() {
+        isCompleted = true;
         // DisplayMessage("the quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhhthe quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhhthe quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhh");
     }
 
-    public void DisplayMessage(string message) {
-        StartCoroutine("WriteMessage", message);
-        messageWriteDone = true;
+    void Update() {
+        if (!isCompleted) {
+            timer += Time.deltaTime;
+
+            if (timer > characterInterval) {
+                timer = 0;
+                textDisplay.text += currentMessage[characterIndex++];
+            }
+            
+        }
     }
 
-    IEnumerator WriteMessage(string message) {
-        if (!messageWriteDone) {
-            yield return new WaitUntil(() => messageWriteDone);
-            yield return new WaitForSecondsRealtime(0.25f);
-        }
-
-        messageWriteDone = false;
+    public void DisplayMessage(string message) {
+        characterIndex = 0;
+        timer = 0;
         textDisplay.text = "";
+        currentMessage = message;
+        isCompleted = false;
+    }
 
-        foreach (char i in message.ToCharArray()) {
-            textDisplay.text += i;
-            //charSound.Play();
-            yield return 0;
-        }
-
-        messageWriteDone = true;
+    public void SkipAhead() {
+        characterIndex = 0;
+        timer = 0;
+        textDisplay.text = currentMessage;
+        isCompleted = true;
     }
 }

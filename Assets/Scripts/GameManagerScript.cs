@@ -14,10 +14,14 @@ public class GameManagerScript : MonoBehaviour
     private VNA[] vn;
     private int actionIndex;
 
-    private 
+    
 
     void Start() {
         vn = new VNA[] {
+            text(Barry, "helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"),
+            text(Buzz, "greetings, fellow bee!"),
+            text(Barry, "why are you so verbose"),
+            text(Buzz, "i feel that talking in big words!"),
             text(Barry, "hello"),
             asset(Barry, 1),
             choice(Buzz, "what color hair do I want", new string[] { "yellow", "black" })
@@ -32,6 +36,7 @@ public class GameManagerScript : MonoBehaviour
             VNA currentAction = vn[actionIndex];
             switch (currentAction.type) {
                 case "text":
+                    GetComponent<VNText>().DisplayMessage(currentAction.text);
                     break;
                 case "choice":
                     break;
@@ -43,6 +48,10 @@ public class GameManagerScript : MonoBehaviour
 
             // increment current action
             actionIndex++;
+        }
+
+        if (Input.GetKeyDown(KeyCode.A)) {
+            GetComponent<VNText>().SkipAhead();
         }
     }
 
