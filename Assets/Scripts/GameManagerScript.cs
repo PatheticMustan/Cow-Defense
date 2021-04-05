@@ -34,40 +34,39 @@ public class GameManagerScript : MonoBehaviour
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            // increment current action
-            // if 1 vn, actionIndex will equal 0, 
-            // edgecase for 0 vn but lmao I don't care, not gonna fix it
-            if (actionIndex != vn.Length) {
-                // parse action
-                VNA currentAction = vn[actionIndex];
-                switch (currentAction.type) {
-                    case "text":
-                        GetComponent<VNText>().DisplayMessage(currentAction.text);
-                        break;
-                    case "choice":
-                        break;
-                    case "asset":
-                        Character ch = currentAction.character.GetComponent<Character>();
-                        if (ch.assets.Length - 1 < currentAction.assetIndex) {
-                            Debug.LogError("Missing asset, " + currentAction.name + " is missing asset #" + currentAction.assetIndex);
-                            break;
-                        }
-
-                        currentAction.character.GetComponent<Image>().sprite = ch.assets[currentAction.assetIndex];
-                        break;
-                    default:
-                        break;
-                }
-
-                actionIndex++;
+            if (!GetComponent<VNText>().isCompleted) {
+                GetComponent<VNText>().SkipAhead();
             } else {
-                Debug.Log("end!");
-                Debug.Log("There's an interesting band called 'Death Grips', their music is weird, like a mix of random words screamed, and percussion. Check them out!");
-            }
-        }
+                // increment current action
+                // if 1 vn, actionIndex will equal 0, 
+                // edgecase for 0 vn but lmao I don't care, not gonna fix it
+                if (actionIndex != vn.Length) {
+                    // parse action
+                    VNA currentAction = vn[actionIndex];
+                    switch (currentAction.type) {
+                        case "text":
+                            GetComponent<VNText>().DisplayMessage(currentAction.text);
+                            break;
+                        case "choice":
+                            break;
+                        case "asset":
+                            Character ch = currentAction.character.GetComponent<Character>();
+                            if (ch.assets.Length - 1 < currentAction.assetIndex) {
+                                Debug.LogError("Missing asset, " + currentAction.name + " is missing asset #" + currentAction.assetIndex);
+                                break;
+                            }
+                            currentAction.character.GetComponent<Image>().sprite = ch.assets[currentAction.assetIndex];
+                            break;
+                        default:
+                            break;
+                    }
 
-        if (Input.GetKeyDown(KeyCode.A)) {
-            GetComponent<VNText>().SkipAhead();
+                    actionIndex++;
+                } else {
+                    Debug.Log("end!");
+                    Debug.Log("There's an interesting band called 'Death Grips', their music is weird, like a mix of random words screamed, and percussion. Check them out!");
+                }
+            }
         }
     }
 

@@ -6,8 +6,9 @@ using TMPro;
 public class VNText : MonoBehaviour {
     public TextMeshProUGUI textDisplay;
     public AudioSource charSound;
-
-    public float characterInterval;
+    
+    // sucks! the interval at which a new character is added
+    public float characterInterval = 0;
     public float timer;
     public string currentMessage;
     public bool isCompleted;
