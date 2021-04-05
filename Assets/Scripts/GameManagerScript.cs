@@ -31,7 +31,10 @@ public class GameManagerScript : MonoBehaviour
             text(Barry, "hello"),
             asset(Barry, 1),
             choice(Buzz, "what color hair do I want", new string[] { "yellow", "black" }),
-            text(Barry, "I have transformed into Akko")
+            text(Barry, "I have transformed into Akko"),
+            text(Buzz, "I hate Akko, I'm leaving"),
+            asset(Buzz, -1),
+            text(Barry, ":(")
         };
 
         actionIndex = 0;
@@ -50,7 +53,6 @@ public class GameManagerScript : MonoBehaviour
                     VNA currentAction = vn[actionIndex];
                     switch (currentAction.type) {
                         case "text":
-                            Debug.Log(currentAction.color);
                             nameText.text = currentAction.name;
                             nameText.GetComponent<TextMeshProUGUI>().color = currentAction.color;
                             GetComponent<VNText>().DisplayMessage(currentAction.text);
@@ -58,10 +60,18 @@ public class GameManagerScript : MonoBehaviour
                         case "choice":
                             break;
                         case "asset":
-                            Character ch = currentAction.character.GetComponent<Character>();
-                            if (ch.assets.Length - 1 < currentAction.assetIndex) {
+                            Character ch = currentAction.character;
+                            if (ch.GetComponent<Character>().assets.Length - 1 < currentAction.assetIndex) {
                                 Debug.LogError("Missing asset, " + currentAction.name + " is missing asset #" + currentAction.assetIndex);
                                 break;
+                            }
+
+                            if (currentAction.assetIndex == -1) {
+                                // if it's -1, make the character invisible
+                                currentAction.character.GetComponent<CanvasGroup>().alpha = 0;
+                                break;
+                            } else {
+                                currentAction.character.GetComponent<CanvasGroup>().alpha = 1;
                             }
                             currentAction.character.GetComponent<Image>().sprite = ch.assets[currentAction.assetIndex];
                             break;
