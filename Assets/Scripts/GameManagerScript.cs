@@ -25,7 +25,8 @@ public class GameManagerScript : MonoBehaviour
             text(Buzz, "i feel that talking in big words!"),
             text(Barry, "hello"),
             asset(Barry, 1),
-            choice(Buzz, "what color hair do I want", new string[] { "yellow", "black" })
+            choice(Buzz, "what color hair do I want", new string[] { "yellow", "black" }),
+            text(Barry, "I have transformed into Akko")
         };
 
         actionIndex = 0;
@@ -33,32 +34,31 @@ public class GameManagerScript : MonoBehaviour
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            // parse action
-            VNA currentAction = vn[actionIndex];
-            switch (currentAction.type) {
-                case "text":
-                    GetComponent<VNText>().DisplayMessage(currentAction.text);
-                    break;
-                case "choice":
-                    break;
-                case "asset":
-                    Character ch = currentAction.character.GetComponent<Character>();
-                    if (ch.assets.Length - 1 < currentAction.assetIndex) {
-                        Debug.LogError("Missing asset, " + currentAction.name + " is missing asset #" + currentAction.assetIndex);
-                        break;
-                    }
-
-                    currentAction.character.GetComponent<Image>().sprite = ch.assets[currentAction.assetIndex];
-                    break;
-                default:
-
-                    break;
-            }
-
             // increment current action
             // if 1 vn, actionIndex will equal 0, 
             // edgecase for 0 vn but lmao I don't care, not gonna fix it
-            if (actionIndex != vn.Length - 1) {
+            if (actionIndex != vn.Length) {
+                // parse action
+                VNA currentAction = vn[actionIndex];
+                switch (currentAction.type) {
+                    case "text":
+                        GetComponent<VNText>().DisplayMessage(currentAction.text);
+                        break;
+                    case "choice":
+                        break;
+                    case "asset":
+                        Character ch = currentAction.character.GetComponent<Character>();
+                        if (ch.assets.Length - 1 < currentAction.assetIndex) {
+                            Debug.LogError("Missing asset, " + currentAction.name + " is missing asset #" + currentAction.assetIndex);
+                            break;
+                        }
+
+                        currentAction.character.GetComponent<Image>().sprite = ch.assets[currentAction.assetIndex];
+                        break;
+                    default:
+                        break;
+                }
+
                 actionIndex++;
             } else {
                 Debug.Log("end!");
