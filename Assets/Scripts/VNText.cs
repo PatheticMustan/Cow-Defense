@@ -26,6 +26,8 @@ public class VNText : MonoBehaviour {
             if (timer > characterInterval) {
                 timer = 0;
                 if (!(currentMessage.Length - 1 < characterIndex)) textDisplay.text += currentMessage[characterIndex++];
+
+                if (characterIndex == currentMessage.Length) isCompleted = true;
             }
             
         }

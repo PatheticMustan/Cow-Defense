@@ -20,6 +20,10 @@ public class GameManagerScript : MonoBehaviour
     // love, Kevin ;))
     public TextMeshProUGUI nameText;
 
+    // set it to true to skip the next action
+    // the code is filled with messy workarounds, band-aids on bulletwounds, and barely held together bits and bobs. Sorry for any bugs.
+    public bool skipAction;
+
     
 
     void Start() {
@@ -38,10 +42,15 @@ public class GameManagerScript : MonoBehaviour
         };
 
         actionIndex = 0;
+
+        // skip first action :P
+        skipAction = true;
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space) || skipAction) {
+            skipAction = false;
+
             if (!GetComponent<VNText>().isCompleted) {
                 GetComponent<VNText>().SkipAhead();
             } else {
@@ -57,14 +66,24 @@ public class GameManagerScript : MonoBehaviour
                             nameText.GetComponent<TextMeshProUGUI>().color = currentAction.color;
                             GetComponent<VNText>().DisplayMessage(currentAction.text);
                             break;
+
+
+
                         case "choice":
+
                             break;
+
+
+
+
                         case "asset":
                             Character ch = currentAction.character;
                             if (ch.GetComponent<Character>().assets.Length - 1 < currentAction.assetIndex) {
                                 Debug.LogError("Missing asset, " + currentAction.name + " is missing asset #" + currentAction.assetIndex);
                                 break;
                             }
+
+                            skipAction = true;
 
                             if (currentAction.assetIndex == -1) {
                                 // if it's -1, make the character invisible
@@ -75,6 +94,9 @@ public class GameManagerScript : MonoBehaviour
                             }
                             currentAction.character.GetComponent<Image>().sprite = ch.assets[currentAction.assetIndex];
                             break;
+
+
+
                         default:
                             break;
                     }
