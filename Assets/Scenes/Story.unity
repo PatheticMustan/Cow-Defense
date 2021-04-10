@@ -799,6 +799,7 @@ GameObject:
   - component: {fileID: 824060368}
   - component: {fileID: 824060370}
   - component: {fileID: 824060369}
+  - component: {fileID: 824060371}
   m_Layer: 5
   m_Name: ChoiceContainer
   m_TagString: Untagged
@@ -863,6 +864,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 824060367}
   m_CullTransparentMesh: 0
+--- !u!225 &824060371
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824060367}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &851447967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,7 +1302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1336370046
 Transform:
   m_ObjectHideFlags: 0
@@ -1340,6 +1353,7 @@ MonoBehaviour:
   actionIndex: 0
   nameText: {fileID: 851447969}
   skipAction: 0
+  choiceContainer: {fileID: 824060367}
 --- !u!1 &1431931083
 GameObject:
   m_ObjectHideFlags: 0

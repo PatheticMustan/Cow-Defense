@@ -23,8 +23,14 @@ public class GameManagerScript : MonoBehaviour
     // set it to true to skip the next action
     // the code is filled with messy workarounds, band-aids on bulletwounds, and barely held together bits and bobs. Sorry for any bugs.
     public bool skipAction;
+    // if you're in the middle of a choice >:((
+    public bool unskippable;
 
-    
+    public bool clicked;
+
+    public GameObject choiceContainer,
+        choiceOne,
+        choiceTwo;
 
     void Start() {
         vn = new VNA[] {
@@ -34,21 +40,33 @@ public class GameManagerScript : MonoBehaviour
             text(Buzz, "i feel that talking in big words!"),
             text(Barry, "hello"),
             asset(Barry, 1),
-            choice(Buzz, "what color hair do I want", new string[] { "yellow", "black" }),
             text(Barry, "I have transformed into Akko"),
-            text(Buzz, "I hate Akko, I'm leaving"),
+            choice(Buzz, "what color hair do I want", new (string, int)[] { ("yellow", 8), ("black", 10) }),
+
+            text(Buzz, "Wow, yellow hair! Snazzy!"),
+            jump(11),
+
+            text(Buzz, "ew, black hair. I'm leaving."),
             asset(Buzz, -1),
-            text(Barry, ":(")
+
+            text(Barry, "END")
         };
 
         actionIndex = 0;
 
         // skip first action :P
         skipAction = true;
+        unskippable = false;
+
+        choiceContainer.GetComponent<CanvasGroup>().alpha = 0;
+
+        // I am so sorry to anyone reading my code from here on out
+        choiceOne = choiceContainer.GetComponent<Transform>().GetChild(0).GetChild(0).gameObject;
+        choiceTwo = choiceContainer.GetComponent<Transform>().GetChild(1).GetChild(0).gameObject;
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space) || skipAction) {
+        if (!unskippable && (Input.GetKeyDown(KeyCode.Space) || skipAction)) {
             skipAction = false;
 
             if (!GetComponent<VNText>().isCompleted) {
@@ -70,29 +88,45 @@ public class GameManagerScript : MonoBehaviour
 
 
                         case "choice":
+                            // display the text, all good and well
+                            nameText.text = currentAction.name;
+                            nameText.GetComponent<TextMeshProUGUI>().color = currentAction.color;
+                            GetComponent<VNText>().DisplayMessage(currentAction.text);
 
+                            // make it unskippable, show the choice container
+                            unskippable = true;
+                            choiceContainer.GetComponent<CanvasGroup>().alpha = 1;
+                            choiceContainer.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                            choiceOne.GetComponent<Text>().text = currentAction.choices[0].choiceText;
+                            choiceTwo.GetComponent<Text>().text = currentAction.choices[1].choiceText;
+
+                            clicked = false;
                             break;
 
 
 
 
                         case "asset":
-                            Character ch = currentAction.character;
-                            if (ch.GetComponent<Character>().assets.Length - 1 < currentAction.assetIndex) {
+                            if (currentAction.character.GetComponent<Character>().assets.Length - 1 < currentAction.assetIndex) {
                                 Debug.LogError("Missing asset, " + currentAction.name + " is missing asset #" + currentAction.assetIndex);
                                 break;
                             }
 
-                            skipAction = true;
-
                             if (currentAction.assetIndex == -1) {
                                 // if it's -1, make the character invisible
                                 currentAction.character.GetComponent<CanvasGroup>().alpha = 0;
-                                break;
                             } else {
                                 currentAction.character.GetComponent<CanvasGroup>().alpha = 1;
+                                currentAction.character.GetComponent<Image>().sprite = currentAction.character.assets[currentAction.assetIndex];
                             }
-                            currentAction.character.GetComponent<Image>().sprite = ch.assets[currentAction.assetIndex];
+
+                            skipAction = true;
+                            break;
+
+
+                        case "jump":
+                            actionIndex = currentAction.actionIndex;
+                            skipAction = true;
                             break;
 
 
@@ -104,17 +138,38 @@ public class GameManagerScript : MonoBehaviour
                     actionIndex++;
                 } else {
                     Debug.Log("end!");
-                    Debug.Log("There's an interesting band called 'Death Grips', their music is weird, like a mix of random words screamed, and percussion. Check them out!");
                 }
             }
         }
     }
 
 
+    public void choice(int choice) {
+        if (!clicked) {
+            clicked = true;
+
+            VNA currentAction = vn[actionIndex - 1];
+
+            choiceContainer.GetComponent<CanvasGroup>().alpha = 0;
+            choiceContainer.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+            Debug.Log(currentAction.choices);
+            actionIndex = currentAction.choices[choice].actionIndex;
+
+            unskippable = false;
+            skipAction = true;
+        }
+        
+    }
+
+
+
+
+
     // I am a bad person
     // make typing shorter heheheheheheheh
     // [choice, text, asset] VNA abstractions
-    private VNA choice(Character character, string text, string[] choices) {
+    private VNA choice(Character character, string text, (string choiceText, int actionIndex)[] choices) {
         return new VNA(character, text, choices);
     }
     private VNA text(Character character, string text) {
@@ -122,6 +177,9 @@ public class GameManagerScript : MonoBehaviour
     }
     private VNA asset(Character character, int index) {
         return new VNA(character, index);
+    }
+    private VNA jump(int index) {
+        return new VNA(index);
     }
 
 
@@ -132,14 +190,15 @@ public class GameManagerScript : MonoBehaviour
         public string name;
         public Color color;
         public string text;
-        public string[] choices;
+        public (string choiceText, int actionIndex)[] choices;
 
         public int assetIndex;
+        public int actionIndex;
 
         public Character character;
 
         // choice
-        public VNA(Character character, string text, string[] choices) {
+        public VNA(Character character, string text, (string choiceText, int actionIndex)[] choices) {
             this.type = "choice";
 
             this.name = character.name; 
@@ -147,6 +206,7 @@ public class GameManagerScript : MonoBehaviour
             this.text = text;
             this.choices = choices;
             this.assetIndex = -1;
+            this.actionIndex = -1;
             this.character = character;
         }
 
@@ -159,6 +219,7 @@ public class GameManagerScript : MonoBehaviour
             this.text = text;
             this.choices = null;
             this.assetIndex = -1;
+            this.actionIndex = -1;
             this.character = character;
         }
 
@@ -171,7 +232,23 @@ public class GameManagerScript : MonoBehaviour
             this.text = null;
             this.choices = null;
             this.assetIndex = index;
+            this.actionIndex = -1;
             this.character = character;
+        }
+
+        // jump to action index
+        public VNA(int index) {
+            this.type = "jump";
+
+            this.name = null;
+            this.color = Color.black;
+            this.text = null;
+            this.choices = null;
+            this.assetIndex = 0;
+            this.actionIndex = index;
+            this.character = null;
+
+            
         }
     }
 }
