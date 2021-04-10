@@ -10,7 +10,8 @@ public class GameManagerScript : MonoBehaviour
     // public GameObject characterContainer;
 
     // character shortcuts, assigned in inspector
-    public Character Barry, Buzz;
+    // our cast list!
+    public Character Barry, Buzz, FarmerBessie, FarmerJohn, Darius;
 
     // there will be no saving, 
     private VNA[] vn;
@@ -41,7 +42,7 @@ public class GameManagerScript : MonoBehaviour
             text(Barry, "hello"),
             asset(Barry, 1),
             text(Barry, "I have transformed into Akko"),
-            choice(Buzz, "what color hair do I want", new (string, int)[] { ("yellow", 8), ("black", 10) }),
+            choice(Buzz, "what color hair do I want", new (string, int)[] { ("yellow", 9), ("black", 11) }),
 
             text(Buzz, "Wow, yellow hair! Snazzy!"),
             jump(11),
@@ -153,8 +154,7 @@ public class GameManagerScript : MonoBehaviour
             choiceContainer.GetComponent<CanvasGroup>().alpha = 0;
             choiceContainer.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
-            Debug.Log(currentAction.choices);
-            actionIndex = currentAction.choices[choice].actionIndex;
+            actionIndex = currentAction.choices[choice].actionIndex - 1;
 
             unskippable = false;
             skipAction = true;
@@ -247,8 +247,6 @@ public class GameManagerScript : MonoBehaviour
             this.assetIndex = 0;
             this.actionIndex = index;
             this.character = null;
-
-            
         }
     }
 }
