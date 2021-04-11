@@ -11,9 +11,9 @@ public class GameManagerScript : MonoBehaviour
 
     // character shortcuts, assigned in inspector
     // our cast list!
-    public Character Barry, Buzz, FarmerBessie, FarmerJohn, Darius;
+    public Character Bart, Buzz, FarmerBessie, FarmerJohn, Darius, Narrator;
 
-    // there will be no saving, 
+    // there will be no saving
     private VNA[] vn;
     public int actionIndex;
 
@@ -23,25 +23,25 @@ public class GameManagerScript : MonoBehaviour
 
     // set it to true to skip the next action
     // the code is filled with messy workarounds, band-aids on bulletwounds, and barely held together bits and bobs. Sorry for any bugs.
-    public bool skipAction;
-    // if you're in the middle of a choice >:((
-    public bool unskippable;
+    private bool skipAction,
+                // if you're in the middle of a choice >:((
+                unskippable,
+                // to stop clicking the same choice multiple times
+                clicked;
 
-    public bool clicked;
-
-    public GameObject choiceContainer,
-        choiceOne,
-        choiceTwo;
+    public GameObject choiceContainer;
+    private GameObject choiceOne, choiceTwo;
 
     void Start() {
         vn = new VNA[] {
-            text(Barry, "helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"),
+            text(Narrator, "and ouch"),
+            text(Bart, "helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"),
             text(Buzz, "greetings, fellow bee!"),
-            text(Barry, "why are you so verbose"),
+            text(Bart, "why are you so verbose"),
             text(Buzz, "i feel that talking in big words!"),
-            text(Barry, "hello"),
-            asset(Barry, 1),
-            text(Barry, "I have transformed into Akko"),
+            text(Bart, "hello"),
+            asset(Bart, 1),
+            text(Bart, "I have transformed into Akko"),
             choice(Buzz, "what color hair do I want", new (string, int)[] { ("yellow", 9), ("black", 11) }),
 
             text(Buzz, "Wow, yellow hair! Snazzy!"),
@@ -50,7 +50,7 @@ public class GameManagerScript : MonoBehaviour
             text(Buzz, "ew, black hair. I'm leaving."),
             asset(Buzz, -1),
 
-            text(Barry, "END")
+            text(Bart, "END")
         };
 
         actionIndex = 0;
@@ -81,8 +81,8 @@ public class GameManagerScript : MonoBehaviour
                     VNA currentAction = vn[actionIndex];
                     switch (currentAction.type) {
                         case "text":
-                            nameText.text = currentAction.name;
-                            nameText.GetComponent<TextMeshProUGUI>().color = currentAction.color;
+                            nameText.text = currentAction.character.name;
+                            nameText.GetComponent<TextMeshProUGUI>().color = currentAction.character.nameColor;
                             GetComponent<VNText>().DisplayMessage(currentAction.text);
                             break;
 
@@ -90,8 +90,8 @@ public class GameManagerScript : MonoBehaviour
 
                         case "choice":
                             // display the text, all good and well
-                            nameText.text = currentAction.name;
-                            nameText.GetComponent<TextMeshProUGUI>().color = currentAction.color;
+                            nameText.text = currentAction.character.name;
+                            nameText.GetComponent<TextMeshProUGUI>().color = currentAction.character.nameColor;
                             GetComponent<VNText>().DisplayMessage(currentAction.text);
 
                             // make it unskippable, show the choice container
@@ -109,7 +109,7 @@ public class GameManagerScript : MonoBehaviour
 
                         case "asset":
                             if (currentAction.character.GetComponent<Character>().assets.Length - 1 < currentAction.assetIndex) {
-                                Debug.LogError("Missing asset, " + currentAction.name + " is missing asset #" + currentAction.assetIndex);
+                                Debug.LogError("Missing asset, " + currentAction.character.name + " is missing asset #" + currentAction.assetIndex);
                                 break;
                             }
 
@@ -187,8 +187,6 @@ public class GameManagerScript : MonoBehaviour
     struct VNA {
         public string type; // choice, text, asset
         
-        public string name;
-        public Color color;
         public string text;
         public (string choiceText, int actionIndex)[] choices;
 
@@ -201,8 +199,6 @@ public class GameManagerScript : MonoBehaviour
         public VNA(Character character, string text, (string choiceText, int actionIndex)[] choices) {
             this.type = "choice";
 
-            this.name = character.name; 
-            this.color = character.nameColor;
             this.text = text;
             this.choices = choices;
             this.assetIndex = -1;
@@ -214,8 +210,6 @@ public class GameManagerScript : MonoBehaviour
         public VNA(Character character, string text) {
             this.type = "text";
 
-            this.name = character.name;
-            this.color = character.nameColor;
             this.text = text;
             this.choices = null;
             this.assetIndex = -1;
@@ -227,8 +221,6 @@ public class GameManagerScript : MonoBehaviour
         public VNA(Character character, int index) {
             this.type = "asset";
 
-            this.name = character.name;
-            this.color = character.nameColor;
             this.text = null;
             this.choices = null;
             this.assetIndex = index;
@@ -240,8 +232,6 @@ public class GameManagerScript : MonoBehaviour
         public VNA(int index) {
             this.type = "jump";
 
-            this.name = null;
-            this.color = Color.black;
             this.text = null;
             this.choices = null;
             this.assetIndex = 0;

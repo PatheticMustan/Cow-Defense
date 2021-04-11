@@ -220,6 +220,79 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &14634875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 14634880}
+  - component: {fileID: 14634879}
+  - component: {fileID: 14634876}
+  - component: {fileID: 14634877}
+  m_Layer: 5
+  m_Name: Narrator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &14634876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14634875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31727f62beb1a454cbaf8641d7a5331a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 
+  nameColor: {r: 1, g: 1, b: 1, a: 1}
+  assets: []
+--- !u!225 &14634877
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14634875}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!222 &14634879
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14634875}
+  m_CullTransparentMesh: 0
+--- !u!224 &14634880
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14634875}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1683497783}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &38171946
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31727f62beb1a454cbaf8641d7a5331a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Barry
+  name: Bart
   nameColor: {r: 0.9433962, g: 0.4621574, b: 0.11124954, a: 1}
   assets:
   - {fileID: -547425867639958572, guid: bcd01b6dd2ab0c147a02d5e6c267c04d, type: 3}
@@ -763,7 +836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Darius
-  nameColor: {r: 0.9433962, g: 0.4621574, b: 0.11124954, a: 1}
+  nameColor: {r: 0.6117647, g: 0.8313726, b: 0.121568635, a: 1}
   assets:
   - {fileID: 6550073942174776290, guid: fb2846074c44a7b49a099876a6ec98c0, type: 3}
   - {fileID: -6857731649886021919, guid: fb2846074c44a7b49a099876a6ec98c0, type: 3}
@@ -1240,8 +1313,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294939136
-  m_fontColor: {r: 0, g: 0.57254905, b: 1, a: 1}
+    rgba: 4278254591
+  m_fontColor: {r: 1, g: 0.9863347, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1534,7 +1607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Buzz Aldren
-  nameColor: {r: 0.67153686, g: 0.33980063, b: 0.8679245, a: 1}
+  nameColor: {r: 0.93392944, g: 1, b: 0, a: 1}
   assets:
   - {fileID: 21300000, guid: 7f938023f855bd34aba6f1b9b39de155, type: 3}
 --- !u!114 &1248428217
@@ -1648,19 +1721,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04f08a99232113f4ba8707cbd022b24f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Barry: {fileID: 38171948}
+  Bart: {fileID: 38171948}
   Buzz: {fileID: 1248428216}
-  FarmerBessie: {fileID: 0}
-  FarmerJohn: {fileID: 0}
-  Darius: {fileID: 0}
+  FarmerBessie: {fileID: 1909600134}
+  FarmerJohn: {fileID: 750860537}
+  Darius: {fileID: 642737745}
+  Narrator: {fileID: 14634876}
   actionIndex: 0
   nameText: {fileID: 851447969}
-  skipAction: 0
-  unskippable: 0
-  clicked: 0
   choiceContainer: {fileID: 824060367}
-  choiceOne: {fileID: 0}
-  choiceTwo: {fileID: 0}
 --- !u!1 &1431931083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,6 +1891,7 @@ Transform:
   - {fileID: 1909600132}
   - {fileID: 750860535}
   - {fileID: 642737743}
+  - {fileID: 14634880}
   m_Father: {fileID: 685207595}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2064,7 +2134,7 @@ MonoBehaviour:
 
     bees! the bees knees, who knew, how goo-d it would be!
 
-    honey honey, oh honey! the sweet nectar of life, how sweet honey could be'
+    honey honey, oh honey! the sweet nectar of life'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2109,7 +2179,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 169
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2133,12 +2203,12 @@ MonoBehaviour:
   m_margin: {x: 30.039818, y: 11.934616, z: 39.650085, w: 11.883034}
   m_textInfo:
     textComponent: {fileID: 1956372946}
-    characterCount: 177
+    characterCount: 151
     spriteCount: 0
-    spaceCount: 35
-    wordCount: 36
+    spaceCount: 30
+    wordCount: 31
     linkCount: 0
-    lineCount: 5
+    lineCount: 4
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0

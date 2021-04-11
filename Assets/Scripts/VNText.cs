@@ -16,7 +16,6 @@ public class VNText : MonoBehaviour {
 
     void Start() {
         isCompleted = true;
-        // DisplayMessage("the quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhhthe quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhhthe quick brown fox jumped over deez nuts lorum ipsum pee pee poo poo ahhhhh eric leo katie kevin eeeee hhhhhhhh");
     }
 
     void Update() {
