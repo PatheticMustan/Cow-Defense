@@ -42,10 +42,10 @@ public class GameManagerScript : MonoBehaviour
             text(Bart, "hello"),
             asset(Bart, 1),
             text(Bart, "I have transformed into Akko"),
-            choice(Buzz, "what color hair do I want", new (string, int)[] { ("yellow", 9), ("black", 11) }),
+            choice(Buzz, "what color hair do I want", new (string, int)[] { ("yellow", 10), ("black", 12) }),
 
             text(Buzz, "Wow, yellow hair! Snazzy!"),
-            jump(11),
+            jump(12),
 
             text(Buzz, "ew, black hair. I'm leaving."),
             asset(Buzz, -1),
