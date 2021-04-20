@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LifeBarScript : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class LifeBarScript : MonoBehaviour {
+    public float barSize;
+    public RectTransform lifeFill;
+
+    void Start() {
+        barSize = gameObject.GetComponent<RectTransform>().sizeDelta.x;
+        updateLifeFill(0);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {}
+
+    public void updateLifeFill(float fill) {
+        lifeFill.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, fill);
     }
 }
